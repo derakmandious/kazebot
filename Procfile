@@ -1,1 +1,1 @@
-python bot.py 
+python Kaze-bot.py 
