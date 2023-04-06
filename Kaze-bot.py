@@ -206,12 +206,12 @@ async def send_random_image_embed(channel):
     
 async def send_info_embed(channel):
     embed = discord.Embed(title='__**Info & Commands**__', description="If you're looking for any info or help, then check out our <#928637273963102308> channel. Or you can use the bot commands listed below", color=discord.Color.teal())
-    embed.add_field(name="!r, !random, !?", value="Sends a random breeze from the collection.", inline=False)
-    embed.add_field(name="!{Breeze No here} - I.e. !6969", value="Sends a specific breeze from the collection.", inline=False)
-    embed.add_field(name="!gif (Breeze No), (breeze no), (Breeze no)", value="Creates a gif from 5 breeze, must be typed exactly as the example, with a space after each comma.", inline=False)
-    embed.add_field(name="!breeze", value="Sends a random breezy image.", inline=False)
-    embed.add_field(name="info or help", value="Sends a link to the FAQ channel", inline=False)
-    embed.add_field(name="!meme", value="Sends a random meme image.", inline=False)
+    embed.add_field(name="🔹!r, !random, !?", value="Sends a random breeze from the collection.", inline=False)
+    embed.add_field(name="🔹!{Breeze No here} - I.e. !6969", value="Sends a specific breeze from the collection.", inline=False)
+    embed.add_field(name="🔹!gif (Breeze No), (breeze no), (Breeze no)", value="Creates a gif from 5 breeze, must be typed exactly as the example, with a space after each comma.", inline=False)
+    embed.add_field(name="🔹!breeze", value="Sends a random breezy image.", inline=False)
+    embed.add_field(name="🔹!info or !help", value="helps you out", inline=False)
+    embed.add_field(name="🔹!meme", value="Sends a random meme image.", inline=False)
     # Add more fields for other commands if needed
     await channel.send(embed=embed)
     # record the time the bot sent the message
