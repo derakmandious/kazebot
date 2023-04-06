@@ -1,1 +1,2 @@
-python bot.py
+worker: python Kaze-bot.py
+
