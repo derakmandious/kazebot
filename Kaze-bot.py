@@ -168,10 +168,11 @@ async def on_message(message):
             embed = discord.Embed(title="𝕄𝕚𝕕𝕟𝕚𝕘𝕙𝕥夏季𝔹𝕣𝕖𝕖𝕫𝕖", color=discord.Color.teal())
             embed.set_image(url="attachment://result.gif")
             embed.add_field(
-                name="Numbers",
-                value=", ".join([str(num) for num in numbers_list]),
-                inline=False,
+            name="Numbers",
+            value=" | ".join([f"[{num}](https://opensea.io/assets/ethereum/0xd9c036e9eef725e5aca4a22239a23feb47c3f05d/{num})" for num in numbers_list]),
+            inline=False,
 )
+
 
             # Send the embed with the GIF
             await message.channel.send(embed=embed, file=gif_file)
