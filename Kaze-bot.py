@@ -146,9 +146,6 @@ async def on_message(message):
         elif content == 'info' or content == 'help':
             await send_info_embed(message.channel)
         
-        elif content == 'meme':
-            await send_meme_embed(message.channel)
-
         elif content.startswith("gif "):
             # Get the image numbers from the message content
             numbers_str = content[4:]
@@ -165,18 +162,15 @@ async def on_message(message):
             gif_file = await create_gif_from_numbers(numbers_list, duration)
 
             # Create the embed
-            embed = discord.Embed(title="𝕄𝕚𝕕𝕟𝕚𝕘𝕙𝕥夏季𝔹𝕣𝕖𝕖𝕫𝕖", color=discord.Color.teal())
+            gif_title = f'[__**𝕄𝕚𝕕𝕟𝕚𝕘𝕙𝕥夏季𝔹𝕣𝕖𝕖𝕫𝕖**__](https://opensea.io/collection/midnightbreeze)'
+            embed = discord.Embed(title=gif_title, color=discord.Color.teal())
             embed.set_image(url="attachment://result.gif")
-            embed.add_field(
-            name="Numbers",
-            value=" | ".join([f"[{num}](https://opensea.io/assets/ethereum/0xd9c036e9eef725e5aca4a22239a23feb47c3f05d/{num})" for num in numbers_list]),
-            inline=False,
-)
-
+            embed.add_field(name="Numbers", value=" | ".join([f"[{num}](https://opensea.io/assets/ethereum/0xd9c036e9eef725e5aca4a22239a23feb47c3f05d/{num})" for num in numbers_list]), inline=False,)
 
             # Send the embed with the GIF
             await message.channel.send(embed=embed, file=gif_file)
             last_message_times[message.channel.id] = datetime.now()
+
 
     if message.channel.id == watched_channel_id:
         # Delete the original message
