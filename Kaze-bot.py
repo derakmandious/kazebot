@@ -111,6 +111,10 @@ watched_channel_id = 1089529781059604500
 output_channel_id = 1034399242325864460
 
 @client.event
+async def on_ready():
+    print('Bot is ready.')
+
+@client.event
 async def on_message(message):
     if message.author.bot:
         return
@@ -127,9 +131,9 @@ async def on_message(message):
         if content.isdigit():
             num = int(content)
             if 1 <= num <= 6969:
-                await send_embed(num, message)
+                await send_embed(num, message.channel)
             else:
-                await message.reply("This item doesn't exist, please try a number between 1-6969")
+                await message.channel.send("This item doesn't exist, please try a number between 1-6969")
                 last_message_times[message.channel.id] = datetime.now()
 
         elif content in ('?', 'random', 'r'):
@@ -181,15 +185,14 @@ async def on_message(message):
         output_channel = client.get_channel(output_channel_id)
         await output_channel.send(f'{message.author}: {message.content}')
         
-async def send_embed(num, message):
-    channel = message.channel
+async def send_embed(num, channel):
     image_url = f'https://midnightbreeze.mypinata.cloud/ipfs/QmVcZrjzmT7CMa2nkgLN5nXVaydxtwPoyUdofNDLwzFTS8/{num}.png'
     embed_title = f'__**𝕄𝕚𝕕𝕟𝕚𝕘𝕙𝕥夏季𝔹𝕣𝕖𝕖𝕫𝕖 #{num}**__'
     embed_url = f'https://opensea.io/assets/ethereum/0xd9c036e9eef725e5aca4a22239a23feb47c3f05d/{num}'
     embed = discord.Embed(title=embed_title, description='Do you feel that sweet midnight breeze?', color=discord.Color.teal(), url=embed_url)
     embed.set_image(url=image_url)
     embed.add_field(name='\u200b', value=f'[Vote ❤️](https://midnightbreeze.store/vote/{num})', inline=False)
-    await message.reply(embed=embed)
+    await channel.send(embed=embed)
     # record the time the bot sent the message
     last_message_times[channel.id] = datetime.now()
 
