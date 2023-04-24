@@ -1,8 +1,7 @@
 import discord
 from discord.ext import commands
-from discord_slash.utils.manage_commands import create_option, create_choice
-from discord_slash.model import ButtonStyle
-from discord_slash.utils.manage_components import create_button, create_actionrow, create_select, create_select_option
+from discord import Button, ButtonStyle, Select, SelectOption
+from interactions import InteractionContext, Command, Option, OptionType
 import os
 import random
 from datetime import datetime, timedelta
