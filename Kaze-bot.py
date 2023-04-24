@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord import Button, ButtonStyle, Select, SelectOption
 from interactions import InteractionContext, Command, Option, OptionType
 import os
 import random
