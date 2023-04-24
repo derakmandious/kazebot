@@ -1,7 +1,9 @@
 import discord
+from btns_menus.Buttons import SButton, SingleButton
+from btns_menus.DropMenus import SDropMenu, DuoDropMenu
+from btns_menus.Combinations import BtnAndDropMenu, MultiBtnAndMenu
+import discord
 from discord.ext import commands
-from discord import Button, ButtonStyle, Select, SelectOption
-from discord_components import Select, SelectOption
 import os
 import random
 from datetime import datetime, timedelta
