@@ -122,8 +122,8 @@ def main_menu_embed():
         title="__**Info Panel - FAQ | LINKS | ROLES**__",
         description="Welcome to the Dutchtide Studio's information panel, if you're looking for information on the studio, our projects or any of our official links, then this system is here to assist, if you cant find the answer your looking here please head to the bottom of the server and open a support ticket. \n\n You must dismiss your messages if you wish to clear the channel. \n\n Please select from the options below to find out more ⬇️",
         color=TEAL_COLOR,
-        image="https://cdn.discordapp.com/attachments/983396025693765672/1040256587501162517/giff.gif"
     )
+    embed.set_image(url="https://cdn.discordapp.com/attachments/983396025693765672/1040256587501162517/giff.gif")
     return embed
 
 @client.event
@@ -200,7 +200,6 @@ async def on_message(message):
             # Send the embed with the GIF
             await message.channel.send(embed=embed, file=gif_file)
             last_message_times[message.channel.id] = datetime.now()
-
 
     if message.channel.id == watched_channel_id:
         # Delete the original message
