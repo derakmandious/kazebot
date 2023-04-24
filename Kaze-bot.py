@@ -232,7 +232,8 @@ async def dutchtide_studios_embed(ctx):
             SelectOption(label="Seasons Collection", value="seasons_collection", emoji="🍂", desc="Info on Dutch's Seasons collection"),
         ]
     )
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
+
 
 async def midnight_breeze_embed(ctx):
     embed = discord.Embed(
@@ -262,7 +263,7 @@ async def midnight_breeze_embed(ctx):
             SelectOption(label="IP", value="ip_faq", emoji="📃", desc="Information about current IP usage")
         ]
     )
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def official_links_embed(ctx):
     embed = discord.Embed(
@@ -304,8 +305,8 @@ async def official_links_embed(ctx):
                 "[コンビニエンスストア/convenience store](https://opensea.io/assets/ethereum/0xd07dc4262bcdbf85190c01c996b4c06a461d2430/15197)\n"
                                 "[Troia](https://opensea.io/assets/ethereum/0xd07dc4262bcdbf85190c01c996b4c06a461d2430/38969)\n"
                 "[711 at night Seasons](https://opensea.io/collection/dutchtide-seasons)\n"
-)
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    )
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def discord_roles_embed(ctx):
     embed = discord.Embed(
@@ -330,7 +331,7 @@ async def discord_roles_embed(ctx):
     "<@&992156016181514380> - Optional role to recieve pings when any major security issues are known",
     color=TEAL_COLOR
     )
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def tide_estates_embed(ctx):
     embed = discord.Embed(
@@ -352,8 +353,8 @@ async def tide_estates_embed(ctx):
     "\[Church Of Crypto\](https://opensea.io/assets/nftboxes?search[resultModel]=ASSETS&search[sortAscending]=true&search[sortBy]=PRICE&search[stringTraits][0][name]=artist%20name&search[stringTraits][0][values][0]=Dutchtide \"Church of crypto\")\n",
     color=TEAL_COLOR
     )
-embed.set_image(url="https://cdn.discordapp.com/attachments/983396025693765672/1039955898296184933/zen_garden.gif")    
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    embed.set_image(url="https://cdn.discordapp.com/attachments/983396025693765672/1039955898296184933/zen_garden.gif")    
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def seasons_collection_embed(ctx):
     embed = discord.Embed(
@@ -374,8 +375,8 @@ async def seasons_collection_embed(ctx):
     "The full \[Tokyo Homage Street\](https://opensea.io/assets/dutchtide?search[stringTraits][0][name]=Artist&search[stringTraits][0][values][0]=Dutchtide&search[sortAscending]=true&search[sortBy]=PRICE \"Full Tokyo Homage Piece\") NFT can only be obtained by people who collected all four separate estates on Dokidoki.",
     color=TEAL_COLOR
     )
-embed.set_image(url="https://cdn.discordapp.com/attachments/983396025693765672/1039955096370425936/tide_Estates.gif")    
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    embed.set_image(url="https://cdn.discordapp.com/attachments/983396025693765672/1039955096370425936/tide_Estates.gif")    
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def future_faq_estates_embed(ctx):
     embed = discord.Embed(
@@ -391,8 +392,8 @@ async def future_faq_estates_embed(ctx):
     "Proof of Concept 👇",
     color=TEAL_COLOR
     )
-embed.set_image(url="https://pbs.twimg.com/ext_tw_video_thumb/1640815176273231872/pu/img/Co-60fTkD5R4OqDX.jpg")
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    embed.set_image(url="https://pbs.twimg.com/ext_tw_video_thumb/1640815176273231872/pu/img/Co-60fTkD5R4OqDX.jpg")
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def highres_faq_embed(ctx):
     embed = discord.Embed(
@@ -402,8 +403,8 @@ async def highres_faq_embed(ctx):
     "2) Head to our website in the \[Vote\](https://www.midnightbreeze.store/vote \"website\") section, type in the number of your breeze and click the circled image below to open the High res.",
     color=TEAL_COLOR
     )
-embed.set_image(url="https://cdn.discordapp.com/attachments/983396053673967676/1039572867173589043/a6f6b2c579ecbaa1a0cee86b061ad7ae.jpg")
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    embed.set_image(url="https://cdn.discordapp.com/attachments/983396053673967676/1039572867173589043/a6f6b2c579ecbaa1a0cee86b061ad7ae.jpg")
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def vote_faq_embed(ctx):
     embed = discord.Embed(
@@ -417,8 +418,8 @@ async def vote_faq_embed(ctx):
     "Dont forget to vote 🫡",
     color=TEAL_COLOR
     )
-embed.set_image(url="https://cdn.discordapp.com/attachments/1049678850210136136/1092565819180990475/ca952070e159bcc48c61e3ba1aa9bed2.png")    
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1049678850210136136/1092565819180990475/ca952070e159bcc48c61e3ba1aa9bed2.png")    
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def print_faq_embed(ctx):
     embed = discord.Embed(
@@ -434,8 +435,8 @@ async def print_faq_embed(ctx):
     "If you wish to check if someone has ordered a print for their breeze already, click \[here\](https://www.midnightbreeze.store/vote \"Search\") and type the number in",
     color=TEAL_COLOR
     )
-embed.set_image(url="https://media.discordapp.net/attachments/983396025693765672/1039587800120578229/ezgif.com-gif-maker_16.gif")
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    embed.set_image(url="https://media.discordapp.net/attachments/983396025693765672/1039587800120578229/ezgif.com-gif-maker_16.gif")
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def rarity_faq_embed(ctx):
     embed = discord.Embed(
@@ -448,8 +449,8 @@ async def rarity_faq_embed(ctx):
     "There were two worlds at play in this project, the spirit world, and the futuristic world, there is no even balance. Maybe you want more futurist? Maybe more Zen? something in the middle? Its up to you",
     color=TEAL_COLOR
     )
-embed.set_image(url="https://cdn.discordapp.com/attachments/1049678850210136136/1092565819180990475/ca952070e159bcc48c61e3ba1aa9bed2.png")
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    embed.set_image(url="https://cdn.discordapp.com/attachments/1049678850210136136/1092565819180990475/ca952070e159bcc48c61e3ba1aa9bed2.png")
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 async def ip_faq_embed(ctx):
     embed = discord.Embed(
@@ -458,7 +459,7 @@ async def ip_faq_embed(ctx):
     "All non monetized requests will be reviewed by our team on a situational basis, please make a request by opening a <#978960393047252992>",
     color=TEAL_COLOR
     )
-await ctx.send(embed=embed, components=[select], ephemeral=True)
+    await ctx.send(embed=embed, components=[select], ephemeral=True)
 
 @client.event
 async def on_component(ctx):
