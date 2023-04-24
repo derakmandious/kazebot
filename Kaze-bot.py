@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord_slash import SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
 from discord_slash.model import ButtonStyle
 from discord_slash.utils.manage_components import create_button, create_actionrow, create_select, create_select_option
