@@ -1,7 +1,7 @@
 {
   "site_package_search_strategy": "pep561",
   "source_directories": [
-    "./Kaze-bot.py"
+    "kaze_bot.py"
   ],
   "search_path": [
     ".env/lib/python3.10/site-packages/"

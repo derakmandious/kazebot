@@ -1,2 +1,2 @@
-worker: python Kaze-bot.py
+worker: python kaze_bot.py
 
