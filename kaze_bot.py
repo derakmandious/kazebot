@@ -9,6 +9,7 @@ from io import BytesIO
 from time import time
 
 from typing import Optional
+from typing import cast
 
 from discord.abc import Messageable
 
@@ -43,7 +44,8 @@ async def on_message(message: discord.Message):
 
         # Send the message to the output channel
         output_channel = client.get_channel(constants.OUTPUT_CHANNEL_ID)
-        await output_channel.send(f'{message.author}: {message.content}')
+        await cast(Messageable,
+                   output_channel).send(f'{message.author}: {message.content}')
 
     if not message.content.startswith('!'):
         return
@@ -67,8 +69,8 @@ async def on_message(message: discord.Message):
 
     elif content in ('?', 'random', 'r'):
         await send_message(message.channel, embed=embeds.random())
-    elif content.lower() == 'breeze':
-        await send_message(message.channel, embed=embeds.breeze())
+    elif content == 'breeze':
+        await send_message(message.channel, embed=embeds.random_image())
     elif content == 'info' or content == 'help':
         await send_message(message.channel, embed=embeds.info())
     elif content.startswith("gif "):
@@ -109,66 +111,68 @@ async def on_message(message: discord.Message):
 
 
 @client.event
-async def on_select_option(interaction: discord.Interaction):
-    if interaction.type != discord.InteractionType.component:
+async def on_select_option(interaction: Interaction):
+    if interaction.type != discord.InteractionType.component or not interaction.data:
         return
 
-    value = interaction.data['values'][0]
-    if value == "dutchtide_studios":
-        await interaction.channel.send()
+    value = cast(dict, interaction.data)['values'][0]
 
     actor = await getattr(globals(), f'on_select_{value}')
     await actor(interaction)
 
 
 async def on_select_dutchtide_studios(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.dutchtide_studios(),
-                              selects.dutchtide_studios())
+    return await reply_interaction(interaction,
+                                   embed=embeds.dutchtide_studios(),
+                                   select=selects.dutchtide_studios())
 
 
 async def on_select_midnight_breeze(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.midnight_breeze(),
-                              selects.midnight_breeze())
+    return await reply_interaction(interaction,
+                                   embed=embeds.midnight_breeze(),
+                                   select=selects.midnight_breeze())
 
 
 async def on_select_official_links_embed(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.official_links())
+    return await reply_interaction(interaction, embed=embeds.official_links())
 
 
 async def on_select_discord_roles(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.discord_roles())
+    return await reply_interaction(interaction, embed=embeds.discord_roles())
 
 
 async def on_select_tide_estates(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.tide_estates())
+    return await reply_interaction(interaction, embed=embeds.tide_estates())
 
 
 async def on_select_seasons_collection(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.seasons_collection())
+    return await reply_interaction(interaction,
+                                   embed=embeds.seasons_collection())
 
 
 async def on_select_future_faq_estates(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.future_faq_estates())
+    return await reply_interaction(interaction,
+                                   embed=embeds.future_faq_estates())
 
 
 async def on_select_highres_faq(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.highres_faq())
+    return await reply_interaction(interaction, embed=embeds.highres_faq())
 
 
 async def on_select_vote_faq(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.vote_faq())
+    return await reply_interaction(interaction, embed=embeds.vote_faq())
 
 
 async def on_select_print_faq(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.print_faq())
+    return await reply_interaction(interaction, embed=embeds.print_faq())
 
 
 async def on_select_rarity_faq(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.rarity_faq())
+    return await reply_interaction(interaction, embed=embeds.rarity_faq())
 
 
 async def on_select_ip_faq(interaction: Interaction):
-    return await send_message(interaction.channel, embeds.ip_faq())
+    return await reply_interaction(interaction, embed=embeds.ip_faq())
 
 
 async def create_gif_from_numbers(numbers, duration):
@@ -208,24 +212,42 @@ async def download_image(session, url):
     return image_bytes
 
 
-async def send_message(channel: Messageable,
+async def reply_interaction(interaction: Interaction,
+                            *,
+                            content: Optional[str] = None,
+                            embed: Optional[Embed] = None,
+                            select: Optional[Select] = None,
+                            file: Optional[File] = None):
+    await send_message(interaction.channel,
+                       content=content,
+                       embed=embed,
+                       select=select,
+                       file=file)
+
+
+async def send_message(channel,
                        *,
                        content: Optional[str] = None,
                        embed: Optional[Embed] = None,
                        select: Optional[Select] = None,
                        file: Optional[File] = None):
     last_message_time = last_message_times.get(channel.id, 0)
-    if time.time() - last_message_time < constants.COOL_DOWN_SECS:
+    if time() - last_message_time < constants.COOL_DOWN_SECS:
         return
 
-    if select is None:
-        await channel.send(content, embed=embed, file=file)
-    else:
+    args = {}
+    if embed is not None:
+        args['embed'] = embed
+    if select is not None:
         view = discord.ui.View()
         view.add_item(select)
-        await channel.send(content, embed=embed, view=view, file=file)
+        args['view'] = view
+    if file is not None:
+        args['file'] = file
 
-    last_message_times[channel.id] = time.time()
+    await channel.send(content, **args)
+
+    last_message_times[channel.id] = time()
 
 
 token = os.environ['DISCORD_BOT_TOKEN']

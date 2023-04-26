@@ -54,7 +54,7 @@ def dutchtide_studios() -> Embed:
     )
 
 
-async def midnight_breeze() -> Embed:
+def midnight_breeze() -> Embed:
     return make_embed(
         title="__**Midnight Breeze**__",
         description=
@@ -74,7 +74,7 @@ async def midnight_breeze() -> Embed:
     )
 
 
-async def official_links() -> Embed:
+def official_links() -> Embed:
     return make_embed(
         title="**__Official Links__**",
         description=
@@ -118,7 +118,7 @@ async def official_links() -> Embed:
     )
 
 
-async def discord_roles() -> Embed:
+def discord_roles() -> Embed:
     return make_embed(
         title="__**Discord roles**__",
         description=
@@ -143,7 +143,7 @@ async def discord_roles() -> Embed:
     )
 
 
-async def tide_estates() -> Embed:
+def tide_estates() -> Embed:
     return make_embed(
         title="__**Tide Estates**__",
         description=
@@ -167,7 +167,7 @@ async def tide_estates() -> Embed:
     )
 
 
-async def seasons_collection():
+def seasons_collection():
     return make_embed(
         title="__**The Seasons Collection**__",
         description=
@@ -190,7 +190,7 @@ async def seasons_collection():
     )
 
 
-async def future_faq_estates() -> Embed:
+def future_faq_estates() -> Embed:
     return make_embed(
         title="__**Future Plans for the project**__",
         description=
@@ -220,7 +220,7 @@ def highres_faq() -> Embed:
     )
 
 
-async def vote_faq() -> Embed:
+def vote_faq() -> Embed:
     return make_embed(
         title="__**Voting & Community decided ranking**__",
         description=
@@ -236,7 +236,7 @@ async def vote_faq() -> Embed:
     )
 
 
-async def print_faq() -> Embed:
+def print_faq() -> Embed:
     return make_embed(
         title="__**Prints**__",
         description=
@@ -254,7 +254,7 @@ async def print_faq() -> Embed:
     )
 
 
-async def rarity_faq():
+def rarity_faq():
     return make_embed(
         title="__**Rarity, futurist & zen score**__",
         description=
@@ -278,7 +278,7 @@ def ip_faq() -> Embed:
     )
 
 
-async def midnightbreeze(num: int) -> Embed:
+def midnightbreeze(num: int) -> Embed:
     image_url = f'https://midnightbreeze.mypinata.cloud/ipfs/QmVcZrjzmT7CMa2nkgLN5nXVaydxtwPoyUdofNDLwzFTS8/{num}.png'
     embed_title = f'__**𝕄𝕚𝕕𝕟𝕚𝕘𝕙𝕥夏季𝔹𝕣𝕖𝕖𝕫𝕖 #{num}**__'
     embed_url = f'https://opensea.io/assets/ethereum/0xd9c036e9eef725e5aca4a22239a23feb47c3f05d/{num}'
