@@ -1,4 +1,5 @@
 import os
+import random
 
 import aiohttp
 import asyncio
@@ -53,26 +54,36 @@ async def on_message(message: discord.Message):
     content = message.content[1:].lower()
 
     if content == "faqcreate":
-        await send_message(message.channel,
+        await send_message(message.channel.send,
+                           message.channel.id,
                            embed=embeds.main_menu(),
                            select=selects.category())
     elif content.isdigit():
         num = int(content)
         if 1 <= num <= 6969:
-            await send_message(message.channel,
+            await send_message(message.channel.send,
+                               message.channel.id,
                                embed=embeds.midnightbreeze(num))
         else:
             await send_message(
-                message.channel,
+                message.channel.send,
+                message.channel.id,
                 content=
                 "This item doesn't exist, please try a number between 1-6969")
 
     elif content in ('?', 'random', 'r'):
-        await send_message(message.channel, embed=embeds.random())
+        await send_message(message.channel.send,
+                           message.channel.id,
+                           embed=embeds.midnightbreeze(random.randint(1,
+                                                                      6969)))
     elif content == 'breeze':
-        await send_message(message.channel, embed=embeds.random_image())
+        await send_message(message.channel.send,
+                           message.channel.id,
+                           embed=embeds.random_image())
     elif content == 'info' or content == 'help':
-        await send_message(message.channel, embed=embeds.info())
+        await send_message(message.channel.send,
+                           message.channel.id,
+                           embed=embeds.info())
     elif content.startswith("gif "):
         # Get the image numbers from the message content
         numbers_list = [
@@ -84,6 +95,7 @@ async def on_message(message: discord.Message):
         if len(numbers_list) > max_images:
             await send_message(
                 message.channel,
+                message.channel.id,
                 content=f"Please use {max_images} images or less for the GIF.")
             return
 
@@ -107,7 +119,10 @@ async def on_message(message: discord.Message):
             inline=False,
         )
 
-        await send_message(message.channel, embed=embed, file=gif_file)
+        await send_message(message.channel.send,
+                           message.channel.id,
+                           embed=embed,
+                           file=gif_file)
 
 
 @client.event
@@ -117,7 +132,7 @@ async def on_select_option(interaction: Interaction):
 
     value = cast(dict, interaction.data)['values'][0]
 
-    actor = await getattr(globals(), f'on_select_{value}')
+    actor = globals()[f'on_select_{value}']
     await actor(interaction)
 
 
@@ -133,7 +148,7 @@ async def on_select_midnight_breeze(interaction: Interaction):
                                    select=selects.midnight_breeze())
 
 
-async def on_select_official_links_embed(interaction: Interaction):
+async def on_select_official_links(interaction: Interaction):
     return await reply_interaction(interaction, embed=embeds.official_links())
 
 
@@ -217,37 +232,45 @@ async def reply_interaction(interaction: Interaction,
                             content: Optional[str] = None,
                             embed: Optional[Embed] = None,
                             select: Optional[Select] = None,
-                            file: Optional[File] = None):
-    await send_message(interaction.channel,
+                            file: Optional[File] = None,
+                            ephemeral: bool = True):
+    await send_message(interaction.response.send_message,
+                       interaction.channel_id,
                        content=content,
                        embed=embed,
                        select=select,
-                       file=file)
+                       file=file,
+                       ephemeral=ephemeral)
 
 
-async def send_message(channel,
+async def send_message(func,
+                       channel_id: Optional[int],
                        *,
                        content: Optional[str] = None,
                        embed: Optional[Embed] = None,
                        select: Optional[Select] = None,
-                       file: Optional[File] = None):
-    last_message_time = last_message_times.get(channel.id, 0)
+                       file: Optional[File] = None,
+                       **kwargs):
+    channel_id = channel_id or 0
+    last_message_time = last_message_times.get(channel_id, 0)
     if time() - last_message_time < constants.COOL_DOWN_SECS:
         return
 
-    args = {}
+    args: dict = kwargs
     if embed is not None:
         args['embed'] = embed
     if select is not None:
+        # pyre-ignore-8
+        select.callback = on_select_option
         view = discord.ui.View()
         view.add_item(select)
         args['view'] = view
     if file is not None:
         args['file'] = file
 
-    await channel.send(content, **args)
+    await func(content, **args)
 
-    last_message_times[channel.id] = time()
+    last_message_times[channel_id] = time()
 
 
 token = os.environ['DISCORD_BOT_TOKEN']
