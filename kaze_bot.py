@@ -47,7 +47,7 @@ async def on_message(message: discord.Message):
         await cast(Messageable,
                    output_channel).send(f'{message.author}: {message.content}')
 
-    if not message.content.startswith('!'):
+    if not message.content or message.content[0] not in ('!', '#'):
         return
 
     content = message.content[1:].lower()
