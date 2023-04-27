@@ -283,9 +283,11 @@ async def send_message(func,
     if file is not None:
         args['file'] = file
 
-    await func(content, **args)
+    message = await func(content, **args)
 
     last_message_times[channel_id] = time()
+
+    return message
 
 
 token = os.environ['DISCORD_BOT_TOKEN']
