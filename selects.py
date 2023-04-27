@@ -10,13 +10,21 @@ def category() -> Select:
     return Select(placeholder="Select a category...",
                   options=[
                       SelectOption(label="Dutchtide Studio's",
-                                   value="dutchtide_studios"),
+                                   value="dutchtide_studios",
+                                   emoji="🌊",
+                                   description="Studio Projects & Info"),
                       SelectOption(label="Midnight Breeze",
-                                   value="midnight_breeze"),
+                                   value="midnight_breeze",
+                                   emoji="🍃",
+                                   description="Info about the Midnight Breeze project"),
                       SelectOption(label="Official Links",
-                                   value="official_links"),
+                                   value="official_links",
+                                   emoji="🔗",
+                                   description="All official links"),
                       SelectOption(label="Discord Roles",
-                                   value="discord_roles"),
+                                   value="discord_roles",
+                                   emoji="🍥",
+                                   description="Info about the roles within this server"),
                   ])
 
 
@@ -59,7 +67,7 @@ def midnight_breeze() -> Select:
                 value="vote_faq",
                 emoji="🆒",
                 description=
-                "What voting means & how to view the community decided rankings"
+                "What voting & community decided rankings mean"
             ),
             SelectOption(label="Prints",
                          value="print_faq",
