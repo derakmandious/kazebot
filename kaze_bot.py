@@ -129,10 +129,18 @@ async def on_select_option(interaction: Interaction):
     if interaction.type != discord.InteractionType.component or not interaction.data:
         return
 
+    message_id = interaction.message.id
     value = cast(dict, interaction.data)['values'][0]
 
-    actor = globals()[f'on_select_{value}']
-    await actor(interaction)
+    # Check if the interaction is from the first main menu
+    if message_id == constants.FIRST_MAIN_MENU_MESSAGE_ID and value in ("dutchtide_studios", "midnight_breeze", "official_links", "discord_roles"):
+        actor = globals()[f'on_select_{value}']
+        await actor(interaction)
+
+    # Check if the interaction has a valid menu type
+    elif value != "midnight_breeze1":  # Exclude the duplicated option
+        actor = globals()[f'on_select_{value}']
+        await actor(interaction)
 
 
 async def on_select_dutchtide_studios(interaction: Interaction):
@@ -153,6 +161,12 @@ async def on_select_official_links(interaction: Interaction):
 
 async def on_select_discord_roles(interaction: Interaction):
     return await reply_interaction(interaction, embed=embeds.discord_roles())
+
+
+async def on_select_midnight_breeze1(interaction: Interaction):
+    return await reply_interaction(interaction,
+                                   embed=embeds.midnight_breeze(),
+                                   select=selects.midnight_breeze())
 
 
 async def on_select_tide_estates(interaction: Interaction):
