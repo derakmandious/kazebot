@@ -135,16 +135,15 @@ async def on_select_option(interaction: Interaction):
     message_id = interaction.message.id
     value = cast(dict, interaction.data)['values'][0]
 
-    # Check if the interaction is from the first main menu
-    if message_id == constants.FIRST_MAIN_MENU_MESSAGE_ID and value in ("dutchtide_studios", "midnight_breeze", "official_links", "discord_roles"):
+    with open("faq_message_id.txt", "r") as f:
+        first_main_menu_message_id = int(f.read().strip())
+
+    if message_id == first_main_menu_message_id and value in ("dutchtide_studios", "midnight_breeze", "official_links", "discord_roles"):
         actor = globals()[f'on_select_{value}']
         await actor(interaction)
-
-    # Check if the interaction has a valid menu type
     elif value != "midnight_breeze1":  # Exclude the duplicated option
         actor = globals()[f'on_select_{value}']
         await actor(interaction)
-
 
 async def on_select_dutchtide_studios(interaction: Interaction):
     return await reply_interaction(interaction,
