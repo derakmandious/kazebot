@@ -54,10 +54,13 @@ async def on_message(message: discord.Message):
     content = message.content[1:].lower()
 
     if content == "faqcreate":
-        await send_message(message.channel.send,
-                           message.channel.id,
-                           embed=embeds.main_menu(),
-                           select=selects.category())
+        sent_message = await send_message(message.channel.send,
+                                          message.channel.id,
+                                          embed=embeds.main_menu(),
+                                          select=selects.category())
+        with open("faq_message_id.txt", "w") as f:
+            f.write(str(sent_message.id))
+
     elif content.isdigit():
         num = int(content)
         if 1 <= num <= 6969:
