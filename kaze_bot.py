@@ -125,7 +125,6 @@ async def on_message(message: discord.Message):
                            file=gif_file)
 
 
-@client.event
 async def on_select_option(interaction: Interaction):
     if interaction.type != discord.InteractionType.component or not interaction.data:
         return

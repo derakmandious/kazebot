@@ -17,10 +17,7 @@ def make_embed(title: str,
                   description=description,
                   color=color or constants.TEAL_COLOR)
     if image:
-        embed.set_image(
-            url=
-            "https://cdn.discordapp.com/attachments/983396025693765672/1040256587501162517/giff.gif"
-        )
+        embed.set_image(url=image)
     return embed
 
 
@@ -254,7 +251,7 @@ def print_faq() -> Embed:
     )
 
 
-def rarity_faq():
+def rarity_faq() -> Embed:
     return make_embed(
         title="__**Rarity, futurist & zen score**__",
         description=
