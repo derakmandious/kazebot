@@ -1,5 +1,8 @@
 TEAL_COLOR = 0x00ffff
 
+# constants.py
+FIRST_MAIN_MENU_MESSAGE_ID = 1101163678469988463  
+
 # cool down for 1 seconds
 COOL_DOWN_SECS = 1
 
