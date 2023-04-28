@@ -64,7 +64,6 @@ async def on_message(message: discord.Message):
             return
 
         sent_message = await send_message(message.channel.send, content="FAQ", embed=embeds.faq(), select=selects.main_menu())
-        print(f"Sent FAQ message: {sent_message}")
 
         # Save the message ID to the database
         if sent_message is not None:
@@ -134,9 +133,12 @@ async def on_message(message: discord.Message):
         print(f"Received command: {content}")
 
     if content.startswith('faqcreate'):
-        print("Entered faqcreate condition")  # Add this line
+        print("Entered faqcreate condition")  # This line is already there
         if not message.author.guild_permissions.administrator:
             return
+
+        sent_message = await send_message(message.channel.send, content="FAQ", embed=embeds.faq(), select=selects.main_menu())
+        print(f"Sent FAQ message: {sent_message}")
 
 async def on_select_option(interaction: Interaction):
     if interaction.type != discord.InteractionType.component or not interaction.data:
