@@ -1,5 +1,6 @@
 import os
 import random
+import sqlite3
 
 import aiohttp
 import asyncio
@@ -25,9 +26,14 @@ import constants
 import embeds
 import selects
 
+conn = sqlite3.connect("my_bot_data.db")
+
 client = discord.Client(intents=discord.Intents.all())
 last_message_times = {}
 
+cursor = conn.cursor()
+cursor.execute('''CREATE TABLE IF NOT EXISTS message_ids (name TEXT PRIMARY KEY, message_id INTEGER)''')
+conn.commit()
 
 @client.event
 async def on_ready():
@@ -53,13 +59,19 @@ async def on_message(message: discord.Message):
 
     content = message.content[1:].lower()
 
-    if content == "faqcreate":
-        sent_message = await send_message(message.channel.send,
-                                          message.channel.id,
-                                          embed=embeds.main_menu(),
-                                          select=selects.category())
-        with open("faq_message_id.txt", "w") as f:
-            f.write(str(sent_message.id))
+    if not message.content.startswith('!faqcreate'):
+        return
+
+    if not message.author.guild_permissions.administrator:
+        return
+
+    sent_message = await send_message(message.channel.send, content="FAQ", embed=embeds.faq(), select=selects.main_menu())
+    
+    # Save the message ID to the database
+    if sent_message is not None:
+        message_id = sent_message.id
+        cursor.execute("INSERT OR REPLACE INTO message_ids (name, message_id) VALUES (?, ?)", ("faq_message_id", message_id))
+        conn.commit()
 
     elif content.isdigit():
         num = int(content)
@@ -135,12 +147,18 @@ async def on_select_option(interaction: Interaction):
     message_id = interaction.message.id
     value = cast(dict, interaction.data)['values'][0]
 
-    with open("faq_message_id.txt", "r") as f:
-        first_main_menu_message_id = int(f.read().strip())
+    # Retrieve the message ID from the database
+    cursor.execute("SELECT message_id FROM message_ids WHERE name=?", ("faq_message_id",))
+    result = cursor.fetchone()
+    if result is not None:
+        first_main_menu_message_id = result[0]
 
+    # Check if the interaction is from the first main menu
     if message_id == first_main_menu_message_id and value in ("dutchtide_studios", "midnight_breeze", "official_links", "discord_roles"):
         actor = globals()[f'on_select_{value}']
         await actor(interaction)
+
+    # Check if the interaction has a valid menu type
     elif value != "midnight_breeze1":  # Exclude the duplicated option
         actor = globals()[f'on_select_{value}']
         await actor(interaction)
@@ -292,3 +310,5 @@ async def send_message(func,
 
 token = os.environ['DISCORD_BOT_TOKEN']
 client.run(token)
+
+conn.close()
