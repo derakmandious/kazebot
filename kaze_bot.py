@@ -246,7 +246,6 @@ async def create_gif_from_numbers(numbers, duration):
 
     return discord.File(gif_buffer, filename="result.gif")
 
-
 async def download_image(session, url):
     async with session.get(url) as response:
         image_bytes = await response.read()
