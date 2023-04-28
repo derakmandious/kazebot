@@ -57,6 +57,7 @@ async def on_message(message: discord.Message):
         return
 
     content = message.content[1:].lower()
+    print(f"Received command: {content}")
 
     if content.startswith('faqcreate'):
         if not message.author.guild_permissions.administrator:
