@@ -39,7 +39,6 @@ conn.commit()
 async def on_ready():
     print('Bot is ready.')
 
-
 @client.event
 async def on_message(message: discord.Message):
     if message.author.bot:
@@ -129,6 +128,13 @@ async def on_message(message: discord.Message):
                            message.channel.id,
                            embed=embed,
                            file=gif_file)
+        
+        print(f"Received command: {content}")
+
+    if content.startswith('faqcreate'):
+        print("Entered faqcreate condition")  # Add this line
+        if not message.author.guild_permissions.administrator:
+            return
 
 async def on_select_option(interaction: Interaction):
     if interaction.type != discord.InteractionType.component or not interaction.data:
