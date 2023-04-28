@@ -51,54 +51,44 @@ async def on_message(message: discord.Message):
 
         # Send the message to the output channel
         output_channel = client.get_channel(constants.OUTPUT_CHANNEL_ID)
-        await cast(Messageable,
-                   output_channel).send(f'{message.author}: {message.content}')
+        await cast(Messageable, output_channel).send(f'{message.author}: {message.content}')
 
     if not message.content or message.content[0] not in ('!', '#'):
         return
 
     content = message.content[1:].lower()
 
-    if not message.content.startswith('!faqcreate'):
-        return
+    if content.startswith('faqcreate'):
+        if not message.author.guild_permissions.administrator:
+            return
 
-    if not message.author.guild_permissions.administrator:
-        return
+        sent_message = await send_message(message.channel.send, content="FAQ", embed=embeds.faq(), select=selects.main_menu())
 
-    sent_message = await send_message(message.channel.send, content="FAQ", embed=embeds.faq(), select=selects.main_menu())
-    
-    # Save the message ID to the database
-    if sent_message is not None:
-        message_id = sent_message.id
-        cursor.execute("INSERT OR REPLACE INTO message_ids (name, message_id) VALUES (?, ?)", ("faq_message_id", message_id))
-        conn.commit()
+        # Save the message ID to the database
+        if sent_message is not None:
+            message_id = sent_message.id
+            cursor.execute("INSERT OR REPLACE INTO message_ids (name, message_id) VALUES (?, ?)", ("faq_message_id", message_id))
+            conn.commit()
 
     elif content.isdigit():
         num = int(content)
         if 1 <= num <= 6969:
-            await send_message(message.channel.send,
-                               message.channel.id,
-                               embed=embeds.midnightbreeze(num))
+            await send_message(message.channel.send, message.channel.id, embed=embeds.midnightbreeze(num))
         else:
             await send_message(
                 message.channel.send,
                 message.channel.id,
-                content=
-                "This item doesn't exist, please try a number between 1-6969")
+                content="This item doesn't exist, please try a number between 1-6969")
 
     elif content in ('?', 'random', 'r'):
-        await send_message(message.channel.send,
-                           message.channel.id,
-                           embed=embeds.midnightbreeze(random.randint(1,
-                                                                      6969)))
+        await send_message(message.channel.send, message.channel.id, embed=embeds.midnightbreeze(random.randint(1, 6969)))
+    
     elif content == 'breeze':
-        await send_message(message.channel.send,
-                           message.channel.id,
-                           embed=embeds.random_image())
+        await send_message(message.channel.send, message.channel.id, embed=embeds.random_image())
+    
     elif content == 'info' or content == 'help':
-        await send_message(message.channel.send,
-                           message.channel.id,
-                           embed=embeds.info())
+        await send_message(message.channel.send, message.channel.id, embed=embeds.info())
+    
     elif content.startswith("gif "):
         # Get the image numbers from the message content
         numbers_list = [
@@ -138,7 +128,6 @@ async def on_message(message: discord.Message):
                            message.channel.id,
                            embed=embed,
                            file=gif_file)
-
 
 async def on_select_option(interaction: Interaction):
     if interaction.type != discord.InteractionType.component or not interaction.data:
