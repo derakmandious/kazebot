@@ -59,6 +59,7 @@ async def on_message(message: discord.Message):
     print(f"Received command: {content}")
 
     if content.startswith('faqcreate'):
+        print("Entered faqcreate condition")  # Make sure this line is here
         if not message.author.guild_permissions.administrator:
             return
 
