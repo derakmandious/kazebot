@@ -125,7 +125,8 @@ async def on_message(message: discord.Message):
                            file=gif_file)
 
 
-async def on_select_option(interaction: Interaction):
+@client.event
+async def on_interaction(interaction: Interaction):
     if interaction.type != discord.InteractionType.component or not interaction.data:
         return
 
@@ -164,7 +165,7 @@ async def on_select_seasons_collection(interaction: Interaction):
                                    embed=embeds.seasons_collection())
 
 
-async def on_select_future_faq_estates(interaction: Interaction):
+async def on_select_future_faq(interaction: Interaction):
     return await reply_interaction(interaction,
                                    embed=embeds.future_faq_estates())
 
@@ -260,7 +261,6 @@ async def send_message(func,
         args['embed'] = embed
     if select is not None:
         # pyre-ignore-8
-        select.callback = on_select_option
         view = discord.ui.View()
         view.add_item(select)
         args['view'] = view
