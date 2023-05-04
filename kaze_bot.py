@@ -167,7 +167,7 @@ async def on_select_seasons_collection(interaction: Interaction):
 
 async def on_select_future_faq(interaction: Interaction):
     return await reply_interaction(interaction,
-                                   embed=embeds.future_faq_estates())
+                                   embed=embeds.future_faq())
 
 
 async def on_select_highres_faq(interaction: Interaction):
@@ -261,6 +261,7 @@ async def send_message(func,
         args['embed'] = embed
     if select is not None:
         # pyre-ignore-8
+        select.callback = on_select_option
         view = discord.ui.View()
         view.add_item(select)
         args['view'] = view
